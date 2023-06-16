@@ -16,7 +16,7 @@ environment {
         }
         stage("Test") {
             steps {
-                echo 'Finish'
+                echo '${DOCKERHUB_CREDENTIALS_PSW}'
             }
         }
         stage("Build Docker File") {
@@ -27,7 +27,7 @@ environment {
 
         stage("Deploy Docker Login") {
             steps {
-               bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'     
+               bat 'echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin'     
             }
         }
 
