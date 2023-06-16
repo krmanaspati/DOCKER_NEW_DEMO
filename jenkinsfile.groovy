@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+environment {
+    DOCKERHUB_CREDENTIALS = credentials('DOCKER_HUB')
+  }
     stages {
         stage("print") {
             steps {
@@ -23,16 +25,15 @@ pipeline {
             }
         }
 
-        stage("Deploy Docker File") {
+        stage("Deploy Docker Login") {
             steps {
-                script{
-                    withCredentials([string(credentialsId: 'DOCKER_HUB', variable: 'DOCKER_HUB_PWB')]) {
-   bat 'docker login -u krmanaspati -p ${DOCKER_HUB_PWB}'
-                        
-}
-                    bat 'docker push docker-demo'
-                }
-                    
+               bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'     
+            }
+        }
+
+        stage("Deploy Docker Push") {
+            steps {
+              bat 'docker push docker-demo'    
             }
         }
     }
