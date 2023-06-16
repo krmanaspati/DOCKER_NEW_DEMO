@@ -6,7 +6,7 @@ environment {
     stages {
         stage("print") {
             steps {
-                echo ${DOCKERHUB_CREDENTIALS_PSW}
+                echo $DOCKERHUB_CREDENTIALS_PSW
             }
         }
         stage("build") {
